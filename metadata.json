@@ -1,0 +1,5 @@
+{
+  "name": "MasrMoney",
+  "description": "The ultimate personal finance app for Egyptians. Track expenses via SMS parsing, AI-powered coaching, and manage installments (Aqsat) effectively.",
+  "requestFramePermissions": []
+}

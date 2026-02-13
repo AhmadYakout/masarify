@@ -1,5 +1,5 @@
 // OpenRouter Service
-const OPENROUTER_API_KEY = "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";
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || "";
 const MODEL = "z-ai/glm-4.5-air:free";
 const APP_URL = "https://masrmoney.app"; // Required by OpenRouter
 const APP_TITLE = "MasrMoney"; // Required by OpenRouter
@@ -81,15 +81,15 @@ export const generateGoalStyle = async (goalDescription: string): Promise<{ colo
   Return strictly in JSON format: {"color": "#RRGGBB", "emoji": "🚀"}`;
 
   const result = await callOpenRouter([{ role: "user", content: prompt }], 0.5);
-  
+
   try {
     // Attempt to extract JSON if the model includes backticks
     const jsonStr = result?.replace(/```json/g, '').replace(/```/g, '').trim();
     if (jsonStr) {
       const parsed = JSON.parse(jsonStr);
-      return { 
-        color: parsed.color || '#0055A5', 
-        emoji: parsed.emoji || '🎯' 
+      return {
+        color: parsed.color || '#0055A5',
+        emoji: parsed.emoji || '🎯'
       };
     }
   } catch (e) {

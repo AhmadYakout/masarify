@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Masarify</string>
+    <string name="title_activity_main">Masarify</string>
+    <string name="package_name">com.masarify.app</string>
+    <string name="custom_url_scheme">com.masarify.app</string>
+</resources>

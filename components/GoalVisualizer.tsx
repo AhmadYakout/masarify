@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
 import { UserGoal } from '../types';
-import { generateGoalStyle } from '../services/aiService';
+
+const GOAL_COLORS = ['#0055A5', '#007A33', '#C5A059', '#0F766E', '#1D4ED8', '#334155'];
+const GOAL_EMOJIS = ['🎯', '🚗', '🏠', '💍', '💻', '📱', '✈️', '📚'];
 
 const GoalVisualizer: React.FC = () => {
   const [goals, setGoals] = useState<UserGoal[]>([]);
   const [newGoalTitle, setNewGoalTitle] = useState('');
   const [amount, setAmount] = useState('');
-  const [isGenerating, setIsGenerating] = useState(false);
 
-  const handleCreateGoal = async (e: React.FormEvent) => {
+  const getGoalStyle = (title: string) => {
+    const seed = title
+      .split('')
+      .reduce((total, char) => total + char.charCodeAt(0), 0);
+    return {
+      color: GOAL_COLORS[seed % GOAL_COLORS.length],
+      emoji: GOAL_EMOJIS[seed % GOAL_EMOJIS.length],
+    };
+  };
+
+  const handleCreateGoal = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsGenerating(true);
-
-    const style = await generateGoalStyle(newGoalTitle);
+    const style = getGoalStyle(newGoalTitle);
 
     const newGoal: UserGoal = {
       id: Date.now().toString(),
@@ -26,7 +35,6 @@ const GoalVisualizer: React.FC = () => {
     setGoals([...goals, newGoal]);
     setNewGoalTitle('');
     setAmount('');
-    setIsGenerating(false);
   };
 
   return (
@@ -59,12 +67,9 @@ const GoalVisualizer: React.FC = () => {
         </div>
         <button 
           type="submit" 
-          disabled={isGenerating}
-          className={`w-full text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-200 transition-colors ${
-            isGenerating ? 'bg-gray-400' : 'bg-cib-blue hover:bg-blue-700'
-          }`}
+          className="w-full text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-200 transition-colors bg-cib-blue hover:bg-blue-700"
         >
-          {isGenerating ? 'AI is dreaming... ✨' : 'Create Goal'}
+          Create Goal
         </button>
       </form>
 

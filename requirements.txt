@@ -1,0 +1,2 @@
+# Baseline Python tooling contract for this repository.
+# No Python runtime dependencies are currently required by the app.
